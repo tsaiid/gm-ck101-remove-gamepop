@@ -2,6 +2,7 @@
 // @name            Remove IdlePopup
 // @author          I-Ta Tsai
 // @namespace       http://tsai.it/project/gmscripts/ck101-remove-gamepop/
+// @homepageURL     https://github.com/tsaiid/gm-remove-idlepopup
 // @version         0.1.20160301
 // @description     A pop window will show every few minutes if no keyboard/mouse action happens. The script will remove this feature. Currently, supports several sites in Taiwan.
 // @include         http://ck101.com/*
