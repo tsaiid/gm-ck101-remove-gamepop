@@ -3,7 +3,7 @@
 // @author          I-Ta Tsai
 // @namespace       http://tsai.it/project/gmscripts/ck101-remove-gamepop/
 // @homepageURL     https://github.com/tsaiid/gm-remove-idlepopup
-// @version         0.1.20160301
+// @version         0.2.20160821
 // @description     A pop window will show every few minutes if no keyboard/mouse action happens. The script will remove this feature. Currently, supports several sites in Taiwan.
 // @include         http://ck101.com/*
 // @include         http://www.ettoday.net/*
@@ -31,143 +31,147 @@
 
 this.$ = this.jQuery = jQuery.noConflict(true);
 
-var url = window.location.href;
+window.addEventListener('load', function() { // wait until page loaded
 
-// for ck101
-if (url.match(/ck101\.com/)) {
-    $('.gamePop').remove();
-    $('#popupGameAd').remove();
-}
+  var url = window.location.href;
 
-// bomb01 (fancybox)
-function removeBomb01Fb(jNodes) {
-    var i = 0;
-    jNodes.click();
-}
+  // for ck101
+  if (url.match(/ck101\.com/)) {
+      $('.gamePop').remove();
+      $('#popupGameAd').remove();
+  }
 
-if (url.match(/www\.bomb01\.com/)) {
-    console.log('bomb01 page');
-    waitForKeyElements (
-    "a:contains('已經讚了，不用再顯示')", 
-        removeBomb01Fb
-    );
-}
+  // bomb01 (fancybox)
+  function removeBomb01Fb(jNodes) {
+      var i = 0;
+      jNodes.click();
+  }
 
-// for *.ptt01.cc
-function removeFbGoodPopupPtt01 (jNodes) {
-    jNodes.click();
-}
+  if (url.match(/www\.bomb01\.com/)) {
+      console.log('bomb01 page');
+      waitForKeyElements (
+      "a:contains('已經讚了，不用再顯示')", 
+          removeBomb01Fb
+      );
+  }
 
-if (url.match(/\.ptt01\.cc/)) {
-    waitForKeyElements (
-    "div.fancybox-overlay a:contains('我已經按讚，不要再提醒我!')", 
-        removeFbGoodPopupPtt01
-    );
-}
+  // for *.ptt01.cc
+  function removeFbGoodPopupPtt01 (jNodes) {
+      jNodes.click();
+  }
 
-// for buzzhand
-function removeFbGoodPopupBh (jNodes) {
-    if (jNodes.contents().find('a:contains("已經讚了")').length) {
-       jNodes.contents().find('a:contains("已經讚了")').click();
-    }
-}
+  if (url.match(/\.ptt01\.cc/)) {
+      waitForKeyElements (
+      "div.fancybox-overlay a:contains('我已經按讚，不要再提醒我!')", 
+          removeFbGoodPopupPtt01
+      );
+  }
 
-if (url.match(/www\.buzzhand\.com/)) {
-    waitForKeyElements (
-    "div#like-encourager iframe", 
-        removeFbGoodPopupBh
-    );
-}
+  // for buzzhand
+  function removeFbGoodPopupBh (jNodes) {
+      if (jNodes.contents().find('a:contains("已經讚了")').length) {
+         jNodes.contents().find('a:contains("已經讚了")').click();
+      }
+  }
 
-// for easylife, wetalk, nownews
-if (url.match(/portable\.easylife\.tw|wetalk\.tw|nownews\.com/)) {
-    $('.idleAd').remove();
-}
+  if (url.match(/www\.buzzhand\.com/)) {
+      waitForKeyElements (
+      "div#like-encourager iframe", 
+          removeFbGoodPopupBh
+      );
+  }
 
-// for life (using fancybox jquery plugin)
-function removeFancyboxPopup (jNodes) {
-    console.log(jNodes);
-    console.log(jNodes.context);
-    console.log(jNodes.selector);
-    jNodes[0].click();
-}
+  // for easylife, wetalk, nownews
+  if (url.match(/portable\.easylife\.tw|wetalk\.tw|nownews\.com/)) {
+      $('.idleAd').remove();
+  }
 
-// for ettoday
-if (url.match(/www\.ettoday\.net/)) {
-    waitForKeyElements (
-    "div#info_box a:contains('已經按過讚了，請關閉！')", 
-        removeFancyboxPopup
-    );
-    $('.idleAd').remove();
-}
+  // for life (using fancybox jquery plugin)
+  function removeFancyboxPopup (jNodes) {
+      console.log(jNodes);
+      console.log(jNodes.context);
+      console.log(jNodes.selector);
+      jNodes[0].click();
+  }
 
-// for appledaily
-if (url.match(/www\.appledaily\.com\.tw/)) {
-    waitForKeyElements (
-    "div.fancybox-overlay a[title='Close']", 
-        removeFancyboxPopup
-    );
-}
+  // for ettoday
+  if (url.match(/www\.ettoday\.net/)) {
+      waitForKeyElements (
+      "div#info_box a:contains('已經按過讚了，請關閉！')", 
+          removeFancyboxPopup
+      );
+      $('.idleAd').remove();
+  }
 
-if (url.match(/www\.life\.com\.tw/)) {
-    console.log("life");
-    waitForKeyElements (
-    "div.fancybox-overlay a:contains('已經加入了，關閉視窗')", 
-        removeFancyboxPopup
-    );
-}
+  // for appledaily
+  if (url.match(/www\.appledaily\.com\.tw/)) {
+      waitForKeyElements (
+      "div.fancybox-overlay a[title='Close']", 
+          removeFancyboxPopup
+      );
+  }
 
-// For techorange (fancybox)
-if (url.match(/buzzorange\.com/)) {
-    console.log('techorange');
-    waitForKeyElements (
-    "a.fancybox-close[title=Close]", 
-        removeFancyboxPopup
-    );    
-}
+  if (url.match(/www\.life\.com\.tw/)) {
+      console.log("life");
+      waitForKeyElements (
+      "div.fancybox-overlay a:contains('已經加入了，關閉視窗')", 
+          removeFancyboxPopup
+      );
+  }
 
-// fotobeginner
-if (url.match(/www\.fotobeginner\.com/)) {
-    console.log('fotobeginner');
-    waitForKeyElements (
-    "a.fancybox-close[title=Close]", 
-        removeFancyboxPopup
-    );    
-}
+  // For techorange (fancybox)
+  if (url.match(/buzzorange\.com/)) {
+      console.log('techorange');
+      waitForKeyElements (
+      "a.fancybox-close[title=Close]", 
+          removeFancyboxPopup
+      );    
+  }
 
-// udn, opinion.udn
-if (url.match(/udn\.com/)) {
-    console.log("udn");
-    $('#show_box').remove();
-}
+  // fotobeginner
+  if (url.match(/www\.fotobeginner\.com/)) {
+      console.log('fotobeginner');
+      waitForKeyElements (
+      "a.fancybox-close[title=Close]", 
+          removeFancyboxPopup
+      );    
+  }
 
-// setn
-if (url.match(/www\.setn\.com/)) {
-    console.log("setn");    
-    $('div.banner_cover_null').remove();
-    $('div.banner_cover_block').remove();
-}
+  // udn, opinion.udn
+  if (url.match(/udn\.com/)) {
+      console.log("udn");
+      $('#show_box').remove();
+  }
 
-// pixnet
-if (url.match(/\.pixnet\.net/)) {
-    console.log("pixnet");    
-    waitForKeyElements (
-        "#idle-pop a.modal-close", 
-        function (jNodes) {
-            console.log(jNodes);
-            jNodes[0].click();
-            $('#idle-pop').remove();
-            console.log('in pixnet, the parent node #idle-pop should be destroyed.');
-        }, 
-        true // delete the watcher after the parent node being removed.
-    );    
-}
+  // setn
+  if (url.match(/www\.setn\.com/)) {
+      console.log("setn");    
+      $('div.banner_cover_null').remove();
+      $('div.banner_cover_block').remove();
+  }
 
-// newmobilelife
-if (url.match(/www\.newmobilelife\.com/)) {
-    console.log('newmobilelife');
-    waitForKeyElements (
-    "a.fancybox-close[title=Close]", 
-        removeFancyboxPopup
-    );    
-}
+  // pixnet
+  if (url.match(/\.pixnet\.net/)) {
+      console.log("pixnet");    
+      waitForKeyElements (
+          "#idle-pop a.modal-close", 
+          function (jNodes) {
+              console.log(jNodes);
+              jNodes[0].click();
+              $('#idle-pop').remove();
+              console.log('in pixnet, the parent node #idle-pop should be destroyed.');
+          }, 
+          true // delete the watcher after the parent node being removed.
+      );    
+  }
+
+  // newmobilelife
+  if (url.match(/www\.newmobilelife\.com/)) {
+      console.log('newmobilelife');
+      waitForKeyElements (
+      "a.fancybox-close[title=Close]", 
+          removeFancyboxPopup
+      );    
+  }
+
+}, false);
