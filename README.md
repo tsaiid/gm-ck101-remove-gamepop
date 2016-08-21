@@ -1,4 +1,4 @@
-gm-ck101-remove-gamepop
+gm-remove-idlepopup
 =======================
 
-Remove the gamePop div, which shows every 5 mins. 
+Remove the idle popups in several sites. 
